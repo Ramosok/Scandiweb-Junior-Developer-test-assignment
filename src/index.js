@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./graphQL";
 
@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <HashRouter>
+      <BrowserRouter>
         <Layout>
           <Routers />
         </Layout>
-      </HashRouter>
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
 );

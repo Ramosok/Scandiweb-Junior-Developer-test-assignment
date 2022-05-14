@@ -1,3 +1,3 @@
-export const ComponentHomePage = ({ dataList }) => {
-  return <div>Hello</div>;
+export const ComponentHomePage = () => {
+  return <div>All</div>;
 };
