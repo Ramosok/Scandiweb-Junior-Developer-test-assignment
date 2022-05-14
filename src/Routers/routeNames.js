@@ -1,3 +1,5 @@
 export const ROUTE_NAMES = {
-  HOME: "/",
+  ALL: "/",
+  TECH: "/tech",
+  CLOTHES: "/clothes",
 };
