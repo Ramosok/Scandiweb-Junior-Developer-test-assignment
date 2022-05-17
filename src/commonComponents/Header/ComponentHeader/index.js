@@ -1,45 +1,50 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import PropTypes, { objectOf } from "prop-types";
+import PropTypes, { func, objectOf, string } from "prop-types";
+import { Link } from "react-router-dom";
 
 import { Header } from "../HeaderStyledComponents";
-import { LinkItems } from "./LinkItems";
-import { handleChangeCurrencies } from "../actions";
-import { Link } from "react-router-dom";
+
 import { ROUTE_NAMES } from "../../../Routers/routeNames";
 
-export const ComponentHeader = ({ categories, currencies }) => {
-  const getLocalStorage = JSON.parse(localStorage.getItem("currencies"));
-  const dispatch = useDispatch();
-  const [select, setSelect] = useState(getLocalStorage || "USD");
+import { SelectItems } from "./SelectItems";
+import { NavBar } from "./NavBar";
 
-  const selectValue = (event) => {
-    const { value } = event.target;
-    setSelect(value);
-  };
-  useEffect(() => {
-    dispatch(handleChangeCurrencies(select));
-    localStorage.setItem("currencies", JSON.stringify(select));
-  }, [select, dispatch]);
+import cartImg from "./../../../static/img/cart.png";
+import brandIcon from "./../../../static/img/BrandIcon.png";
+import { TestSelect } from "./TestSelect";
 
+export const ComponentHeader = ({
+  categories,
+  currencies,
+  select,
+  selectValue,
+  getLocalStorage,
+}) => {
   return (
     <Header>
-      {categories?.categories?.map(({ name }) => (
-        <LinkItems key={name} name={name} />
-      ))}
-      <select name={select} id={select} value={select} onChange={selectValue}>
-        {currencies.currencies?.map(({ label, symbol }) => (
-          <option
-            defaultValue={getLocalStorage === label}
-            key={label}
-            value={label}
-          >
-            {symbol} {label}
-          </option>
-        ))}
-      </select>
+      <NavBar categories={categories} />
+      <div style={{ alignSelf: "center", marginRight: "120px" }}>
+        <Link to={ROUTE_NAMES.ALL}>
+          <img src={brandIcon} alt="brand icon" />
+        </Link>
+      </div>
+      <div style={{ alignSelf: "center" }}>
+        <SelectItems
+          currencies={currencies}
+          select={select}
+          selectValue={selectValue}
+          getLocalStorage={getLocalStorage}
+        />
+        <Link to={ROUTE_NAMES.CART}>
+          <img src={cartImg} alt="cart" />
+        </Link>
+      </div>
       <div>
-        <Link to={ROUTE_NAMES.CART}>CART</Link>
+        <TestSelect
+          currencies={currencies}
+          select={select}
+          selectValue={selectValue}
+          getLocalStorage={getLocalStorage}
+        />
       </div>
     </Header>
   );
@@ -47,4 +52,7 @@ export const ComponentHeader = ({ categories, currencies }) => {
 ComponentHeader.propTypes = {
   categories: objectOf(PropTypes.array).isRequired,
   currencies: objectOf(PropTypes.array).isRequired,
+  selectValue: func.isRequired,
+  select: PropTypes.string.isRequired,
+  getLocalStorage: PropTypes.string.isRequired,
 };

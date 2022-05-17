@@ -3,7 +3,7 @@ import { GET_PRODUCTS } from "../../../graphQL/query";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { prisesConvert } from "../../../utils/prisesConvert";
+import { dataConverter } from "../../../utils/dataConverter";
 
 export const ComponentHomePage = () => {
   const { data, loading } = useQuery(GET_PRODUCTS);
@@ -28,7 +28,13 @@ export const ComponentHomePage = () => {
       {productList?.products.map(({ id, name, prices }) => (
         <div key={id} id={id}>
           <p>{name}</p>
-          <p>{prisesConvert(prices)[currentCurrencies]}</p>
+          <p>
+            {
+              dataConverter(prices, "currency", "label", "amount")[
+                currentCurrencies
+              ]
+            }
+          </p>
         </div>
       ))}
     </div>
