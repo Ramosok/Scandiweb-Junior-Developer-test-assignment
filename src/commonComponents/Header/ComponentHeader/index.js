@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import PropTypes, { arrayOf, objectOf } from "prop-types";
+import PropTypes, { objectOf } from "prop-types";
 
 import { Header } from "../HeaderStyledComponents";
 import { LinkItems } from "./LinkItems";
 import { handleChangeCurrencies } from "../actions";
+import { Link } from "react-router-dom";
+import { ROUTE_NAMES } from "../../../Routers/routeNames";
 
 export const ComponentHeader = ({ categories, currencies }) => {
   const getLocalStorage = JSON.parse(localStorage.getItem("currencies"));
@@ -22,13 +24,13 @@ export const ComponentHeader = ({ categories, currencies }) => {
 
   return (
     <Header>
-      {categories?.map(({ name }) => (
+      {categories?.categories?.map(({ name }) => (
         <LinkItems key={name} name={name} />
       ))}
-      <select name={select} id={select} onChange={selectValue}>
+      <select name={select} id={select} value={select} onChange={selectValue}>
         {currencies.currencies?.map(({ label, symbol }) => (
           <option
-            selected={getLocalStorage === label}
+            defaultValue={getLocalStorage === label}
             key={label}
             value={label}
           >
@@ -36,10 +38,13 @@ export const ComponentHeader = ({ categories, currencies }) => {
           </option>
         ))}
       </select>
+      <div>
+        <Link to={ROUTE_NAMES.CART}>CART</Link>
+      </div>
     </Header>
   );
 };
 ComponentHeader.propTypes = {
-  categories: arrayOf(PropTypes.object).isRequired,
+  categories: objectOf(PropTypes.array).isRequired,
   currencies: objectOf(PropTypes.array).isRequired,
 };
