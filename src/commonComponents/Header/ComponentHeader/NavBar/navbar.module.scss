@@ -1,0 +1,16 @@
+@import "../../../../variables";
+@import "../../../../fonts";
+
+.navbar_container {
+  display: flex;
+  a {
+    padding: 28px 16px;
+    height: 100%;
+    display: block;
+    font-family: Raleway-SemiBold, sans-serif;
+    &:hover {
+      color: $hoverColorAndCart;
+      border-bottom: 2px solid $hoverColorAndCart;
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { ROUTE_NAMES } from "../../../../Routers/routeNames";
 
 export const LinkItems = memo(({ name }) => {
   return (
-    <div style={{ margin: "5px" }}>
+    <div>
       <Link to={ROUTE_NAMES[name.toUpperCase()]}>{name}</Link>
     </div>
   );
