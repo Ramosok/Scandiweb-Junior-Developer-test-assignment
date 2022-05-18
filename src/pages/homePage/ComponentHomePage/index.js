@@ -1,36 +1,18 @@
-import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../../../graphQL/query";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
 import { dataConverter } from "../../../utils/dataConverter";
+import PropTypes from "prop-types";
 
-export const ComponentHomePage = () => {
-  const { data, loading } = useQuery(GET_PRODUCTS);
-  const [products, setProducts] = useState([]);
-  const { currentCurrencies } = useSelector((state) => state.currencies);
-  const path = useLocation();
-
-  const pathName = path.pathname.slice(1);
-
-  useEffect(() => {
-    if (!loading) {
-      setProducts(data);
-    }
-  }, [data, loading]);
-
-  const productList = products.categories?.find(
-    (item) => item.name === `${pathName}`
-  );
-
+export const ComponentHomePage = ({
+  currentCurrencies,
+  productCategoryList,
+}) => {
   return (
     <div>
-      {productList?.products.map(({ id, name, prices }) => (
+      {productCategoryList.products.map(({ id, name, prices }) => (
         <div key={id} id={id}>
           <p>{name}</p>
           <p>
             {
-              dataConverter(prices, "currency", "label", "amount")[
+              dataConverter(prices, "currency", "amount", "label")[
                 currentCurrencies
               ]
             }
@@ -39,4 +21,12 @@ export const ComponentHomePage = () => {
       ))}
     </div>
   );
+};
+ComponentHomePage.propTypes = {
+  productCategoryList: PropTypes.shape({
+    name: PropTypes.string,
+    products: PropTypes.array,
+    __typename: PropTypes.string,
+  }),
+  currentCurrencies: PropTypes.string.isRequired,
 };
