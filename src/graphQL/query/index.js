@@ -26,7 +26,7 @@ export const GET_PRODUCTS = gql`
         inStock
         gallery
         description
-        brand
+
         prices {
           currency {
             label
@@ -35,6 +35,14 @@ export const GET_PRODUCTS = gql`
           amount
         }
       }
+    }
+  }
+`;
+export const GET_PRODUCT = gql`
+  query {
+    product(id: "huarache-x-stussy-le") {
+      id
+      name
     }
   }
 `;
