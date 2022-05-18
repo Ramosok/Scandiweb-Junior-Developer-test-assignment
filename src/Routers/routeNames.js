@@ -3,4 +3,5 @@ export const ROUTE_NAMES = {
   TECH: "/tech",
   CLOTHES: "/clothes",
   CART: "/cart",
+  PRODUCT_DETAILS: "/:id",
 };

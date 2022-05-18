@@ -18,12 +18,13 @@ export const ContainerHomePage = () => {
   const [dataProducts] = useFetchGraphQl(GET_PRODUCTS);
 
   const productCategoryList = FilterPagesCategory(
-    dataProducts.categories,
+    dataProducts?.categories,
     pathName
   );
 
   return (
     <ComponentHomePage
+      pathName={pathName}
       currentCurrencies={currentCurrencies}
       productCategoryList={productCategoryList}
     />
