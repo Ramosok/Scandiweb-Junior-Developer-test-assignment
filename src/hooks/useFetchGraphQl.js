@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 
 export const useFetchGraphQl = (getData, defaultValue) => {
   const { data, loading, error } = useQuery(getData || defaultValue);
+
   const [receivedData, setReceivedData] = useState(defaultValue || null);
 
   useEffect(() => {
@@ -12,6 +13,7 @@ export const useFetchGraphQl = (getData, defaultValue) => {
     if (!loading) {
       setReceivedData(data);
     }
-  }, [getData, loading, error]);
+  }, [getData, loading, error, data]);
+
   return [receivedData, loading, error];
 };

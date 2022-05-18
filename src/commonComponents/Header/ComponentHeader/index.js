@@ -1,58 +1,56 @@
-import PropTypes, { func, objectOf, string } from "prop-types";
+import PropTypes, { func, objectOf } from "prop-types";
 import { Link } from "react-router-dom";
 
-import { Header } from "../HeaderStyledComponents";
+import { Block, Header } from "../HeaderStyledComponents";
 
 import { ROUTE_NAMES } from "../../../Routers/routeNames";
 
-import { SelectItems } from "./SelectItems";
 import { NavBar } from "./NavBar";
+import { SelectItem } from "./SelectItem";
 
 import cartImg from "./../../../static/img/cart.png";
 import brandIcon from "./../../../static/img/BrandIcon.png";
-import { TestSelect } from "./TestSelect";
 
 export const ComponentHeader = ({
   categories,
   currencies,
-  select,
-  selectValue,
-  getLocalStorage,
+  selectedOption,
+  getSymbol,
+  isOpen,
+  toggling,
+  onOptionClicked,
 }) => {
   return (
     <Header>
       <NavBar categories={categories} />
-      <div style={{ alignSelf: "center", marginRight: "120px" }}>
+      <Block>
         <Link to={ROUTE_NAMES.ALL}>
           <img src={brandIcon} alt="brand icon" />
         </Link>
-      </div>
-      <div style={{ alignSelf: "center" }}>
-        <SelectItems
+      </Block>
+      <Block>
+        <SelectItem
           currencies={currencies}
-          select={select}
-          selectValue={selectValue}
-          getLocalStorage={getLocalStorage}
+          selectedOption={selectedOption}
+          getSymbol={getSymbol}
+          isOpen={isOpen}
+          toggling={toggling}
+          onOptionClicked={onOptionClicked}
         />
-        <Link to={ROUTE_NAMES.CART}>
-          <img src={cartImg} alt="cart" />
-        </Link>
-      </div>
-      <div>
-        <TestSelect
-          currencies={currencies}
-          select={select}
-          selectValue={selectValue}
-          getLocalStorage={getLocalStorage}
-        />
-      </div>
+        <div>
+          <Link to={ROUTE_NAMES.CART}>
+            <img src={cartImg} alt="cart" />
+          </Link>
+        </div>
+      </Block>
     </Header>
   );
 };
 ComponentHeader.propTypes = {
   categories: objectOf(PropTypes.array).isRequired,
   currencies: objectOf(PropTypes.array).isRequired,
-  selectValue: func.isRequired,
-  select: PropTypes.string.isRequired,
-  getLocalStorage: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  toggling: func.isRequired,
+  onOptionClicked: func.isRequired,
+  selectedOption: PropTypes.string.isRequired,
 };
