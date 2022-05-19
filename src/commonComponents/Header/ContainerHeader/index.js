@@ -1,5 +1,5 @@
-import { memo, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { memo, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useFetchGraphQl } from "../../../hooks";
 
@@ -11,27 +11,30 @@ import { handleChangeCurrencies } from "../actions";
 
 import { dataConverter } from "../../../utils/dataConverter";
 
-export const ContainerHeader = memo(() => {
-  const getLocalStorage = JSON.parse(localStorage.getItem("currencies"));
+import { getCurrencies } from "../selectors";
 
+export const ContainerHeader = memo(() => {
+  const { currentCurrencies } = useSelector(getCurrencies);
   const [categories] = useFetchGraphQl(GET_CATEGORIES, {});
   const [currencies] = useFetchGraphQl(GET_CURRENCIES, {});
   const [selectedOption, setSelectedOption] = useState(
-    getLocalStorage || "USD"
+    currentCurrencies || "USD"
   );
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
-  const onOptionClicked = (label) => () => {
-    setSelectedOption(label);
-    setIsOpen(false);
-  };
-  const toggling = () => setIsOpen(!isOpen);
+  const onOptionClicked = useCallback(
+    (label) => () => {
+      setSelectedOption(label);
+      setIsOpen(false);
+    },
+    [selectedOption]
+  );
+  const toggling = useCallback(() => setIsOpen(!isOpen), [isOpen]);
 
   useEffect(() => {
     dispatch(handleChangeCurrencies(selectedOption));
-    localStorage.setItem("currencies", JSON.stringify(selectedOption));
   }, [selectedOption, dispatch]);
 
   const getSymbol = dataConverter(currencies?.currencies, "label", "symbol");

@@ -26,7 +26,6 @@ export const GET_PRODUCTS = gql`
         inStock
         gallery
         description
-
         prices {
           currency {
             label
@@ -39,8 +38,8 @@ export const GET_PRODUCTS = gql`
   }
 `;
 export const GET_PRODUCT = gql`
-  query {
-    product(id: "huarache-x-stussy-le") {
+  query getProduct($id: String!) {
+    product(id: $id) {
       id
       name
     }
