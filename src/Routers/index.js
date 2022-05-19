@@ -13,7 +13,7 @@ export const Routers = () => {
       <Route path={ROUTE_NAMES.CLOTHES} element={<ContainerHomePage />} />
       <Route path={ROUTE_NAMES.CART} element={<ContainerCartPage />} />
       <Route path={ROUTE_NAMES.PRODUCT_DETAILS} element={<ProductDetails />} />
-      <Route path="*" element={<Navigate to="/all" replace />} />
+      <Route path="/" element={<Navigate to="/all" replace />} />
     </Routes>
   );
 };

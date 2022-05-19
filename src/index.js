@@ -6,22 +6,25 @@ import { client } from "./graphQL";
 
 import { Routers } from "./Routers";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { persistor, store } from "./redux/store";
 
 import { Layout } from "./commonComponents/Layout";
 
 import "./index.css";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <BrowserRouter>
-          <Layout>
-            <Routers />
-          </Layout>
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <Layout>
+              <Routers />
+            </Layout>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>

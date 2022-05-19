@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
-export const useFetchGraphQl = (getData, defaultValue) => {
-  const { data, loading, error } = useQuery(getData || defaultValue);
+export const useFetchGraphQl = (getData, defaultValue, defaultVariables) => {
+  const { data, loading, error } = useQuery(getData, {
+    variables: defaultVariables,
+  });
 
   const [receivedData, setReceivedData] = useState(defaultValue || null);
 

@@ -1,30 +1,39 @@
-import { dataConverter } from "../../../utils/dataConverter";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { ROUTE_NAMES } from "../../../Routers/routeNames";
+
+import { CardProduct } from "./CardProduct";
+
+import ErrorsBoundary from "../../../commonComponents/ErrorsBoundary";
+
+import styles from "./../homePage.module.scss";
 
 export const ComponentHomePage = ({
   currentCurrencies,
   productCategoryList,
   pathName,
+  getProduct,
 }) => {
   return (
-    <div>
-      <h1>{pathName}</h1>
-      {productCategoryList?.products.map(({ id, name, prices }) => (
-        <div key={id} id={id}>
-          <p>
-            <Link to={`${id}`}>{name}</Link>
-          </p>
-          <p>
-            {
-              dataConverter(prices, "currency", "amount", "label")[
-                currentCurrencies
-              ]
-            }
-          </p>
+    <div className={styles.container}>
+      <h1 className={styles.title_page}>{pathName}</h1>
+      <ErrorsBoundary>
+        <div className={styles.card_container}>
+          {productCategoryList?.products.map(
+            ({ id, name, prices, inStock, gallery }) => (
+              <CardProduct
+                key={id}
+                id={id}
+                name={name}
+                pathName={pathName}
+                inStock={inStock}
+                currentCurrencies={currentCurrencies}
+                gallery={gallery}
+                prices={prices}
+                getProduct={getProduct}
+              />
+            )
+          )}
         </div>
-      ))}
+      </ErrorsBoundary>
     </div>
   );
 };
@@ -36,4 +45,5 @@ ComponentHomePage.propTypes = {
   }),
   pathName: PropTypes.string,
   currentCurrencies: PropTypes.string.isRequired,
+  getProduct: PropTypes.func.isRequired,
 };
