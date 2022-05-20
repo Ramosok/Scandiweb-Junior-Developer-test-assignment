@@ -2,6 +2,7 @@ import styled from "styled-components";
 import arrow from "./../../../../static/img/arrow_select.png";
 
 export const DropDownContainer = styled.div`
+  z-index: 1000;
   width: 60px;
   margin-left: 20px;
   &:hover {
@@ -30,7 +31,7 @@ export const DropDownList = styled.ul`
 export const ListItem = styled.li`
   list-style: none;
   padding: 5%;
-
+  background-color: #ffffff;
   &:hover {
     background-color: #eeeeee;
     cursor: pointer;

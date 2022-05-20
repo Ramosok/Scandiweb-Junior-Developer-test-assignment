@@ -14,7 +14,7 @@ export const ComponentHomePage = ({
 }) => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title_page}>{pathName}</h1>
+      <h1>{pathName}</h1>
       <ErrorsBoundary>
         <div className={styles.card_container}>
           {productCategoryList?.products.map(
