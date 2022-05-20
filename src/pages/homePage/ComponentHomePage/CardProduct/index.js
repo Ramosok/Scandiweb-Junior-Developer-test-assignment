@@ -4,6 +4,10 @@ import { dataConverter } from "../../../../utils/dataConverter";
 
 import { ROUTE_NAMES } from "../../../../Routers/routeNames";
 
+import styles from "./../../homePage.module.scss";
+
+import cartImg from "./../../../../static/img/cart.png";
+
 export const CardProduct = ({
   id,
   name,
@@ -14,50 +18,40 @@ export const CardProduct = ({
   prices,
   getProduct,
 }) => {
+  const currentCurrenciesMap = dataConverter(
+    prices,
+    "currency",
+    "amount",
+    "label"
+  );
+  const currentPath = pathName.toUpperCase();
+
   //throw new Error("I crashed!");
   return (
-    <div id={id} style={{ position: "relative" }}>
-      {inStock && (
-        <div
-          style={{
-            position: "absolute",
-            top: "0",
-            background: "red",
-            opacity: "0.3",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <p>in stock</p>
-        </div>
-      )}
-      <div key={id} id={id}>
-        <p>
+    <div id={id} className={styles.card}>
+      <Link
+        onClick={() => getProduct(id)}
+        to={`${ROUTE_NAMES[currentPath]}${id}`}
+      >
+        <div key={id}>
+          {inStock && <p className={styles.out_of_stock}>out of stock</p>}
           <img
-            style={{ objectFit: "cover" }}
+            className={inStock ? styles.is_stock : null}
             height="356"
             width="338"
             src={gallery[0]}
             alt={name}
           />
-        </p>
-        <p>
-          <Link
-            onClick={() => getProduct(id)}
-            to={`${ROUTE_NAMES[pathName.toUpperCase()]}${id}`}
-          >
-            {name}
-          </Link>
-        </p>
-        <p>
-          {
-            dataConverter(prices, "currency", "amount", "label")[
-              currentCurrencies
-            ]
-          }
-        </p>
-        <button>add cart</button>
-      </div>
+          <p>{name}</p>
+          <p>{currentCurrenciesMap[currentCurrencies]}</p>
+        </div>
+      </Link>
+      <button
+        className={styles.btn_add_cart}
+        onClick={() => console.log("add")}
+      >
+        <img src={cartImg} alt="Cart" />
+      </button>
     </div>
   );
 };

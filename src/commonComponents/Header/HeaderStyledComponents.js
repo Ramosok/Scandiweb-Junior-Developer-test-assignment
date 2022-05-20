@@ -6,7 +6,6 @@ export const Header = styled.header`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 101px 0 117px;
 `;
 export const Block = styled.div`
   display: flex;

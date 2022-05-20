@@ -1,10 +1,59 @@
+@import "../../variables";
+@import "../../fonts";
+
 .container {
-  padding: 0 130px;
+  //padding: 0 130px;
+  width: 100%;
   h1 {
     text-transform: uppercase;
   }
+  img {
+    object-fit: cover;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+.is_stock {
+  opacity: 0.5;
 }
 .card_container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+}
+
+.card {
+  position: relative;
+  &:nth-child(2n) {
+    margin: 2% 0;
+  }
+  &:hover {
+    .btn_add_cart {
+      display: block;
+    }
+  }
+}
+
+.out_of_stock {
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  color: #8d8f9a;
+}
+.btn_add_cart {
+  display: none;
+  position: absolute;
+  bottom: 72px;
+  right: 31px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background-color: $hoverColorAndCart;
+  img {
+    margin: 0 auto;
+  }
 }
